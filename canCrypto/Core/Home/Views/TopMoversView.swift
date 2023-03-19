@@ -10,10 +10,10 @@ import SwiftUI
 struct TopMoversView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-           Text("Top Movers")
-                .font(.headline)
-                .padding(.horizontal)
+            // MARK: - Header
+            SectionHeaderTitle("Top Movers")
             
+            // MARK: - List
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(0..<5) { _ in
@@ -23,7 +23,6 @@ struct TopMoversView: View {
                 .padding(.horizontal)
             }
         }
-        .padding(.vertical)
     }
 }
 

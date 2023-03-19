@@ -11,10 +11,11 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-                // MARK: - Top Movers View
                 TopMoversView()
                 
-                // MARK: - All Coins View
+                Divider().padding(.vertical, 6)
+                
+                AllCoinsView()
             }
             .navigationTitle("Live Prices")
         }
