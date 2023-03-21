@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct AllCoinsView: View {
+    // MARK: - Properties
+    @StateObject var homeViewModel: HomeViewModel
+    
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             // MARK: - Header
@@ -28,8 +32,12 @@ struct AllCoinsView: View {
                 
                 // MARK: - List
                 ScrollView(showsIndicators: false) {
-                    ForEach(0..<50) { _ in
-                        CoinRowView()
+                    ForEach(homeViewModel.coins) { coin in
+                        NavigationLink {
+                            CoinDetailsView()
+                        } label: {
+                            CoinRowView(coin: coin)
+                        }
                     }
                 }
             }
@@ -39,6 +47,6 @@ struct AllCoinsView: View {
 
 struct AllCoinsView_Previews: PreviewProvider {
     static var previews: some View {
-        AllCoinsView()
+        AllCoinsView(homeViewModel: HomeViewModel())
     }
 }

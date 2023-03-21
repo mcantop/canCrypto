@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct TopMoversView: View {
+    // MARK: - Properties
+    @StateObject var homeViewModel: HomeViewModel
+    
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             // MARK: - Header
@@ -15,9 +19,13 @@ struct TopMoversView: View {
             
             // MARK: - List
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(0..<5) { _ in
-                        TopMoversItemView()
+                HStack(spacing: 24) {
+                    ForEach(homeViewModel.topMovingCoins) { coin in
+                        NavigationLink {
+                            CoinDetailsView()
+                        } label: {
+                            TopMoversItemView(coin: coin)
+                        }
                     }
                 }
                 .padding(.horizontal)
@@ -28,6 +36,6 @@ struct TopMoversView: View {
 
 struct TopMoversView_Previews: PreviewProvider {
     static var previews: some View {
-        TopMoversView()
+        TopMoversView(homeViewModel: HomeViewModel())
     }
 }

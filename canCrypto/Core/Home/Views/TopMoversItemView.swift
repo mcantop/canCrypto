@@ -6,42 +6,54 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct TopMoversItemView: View {
+    // MARK: - Properties
+    @Environment(\.colorScheme) var scheme
+    let coin: CoinModel
+    
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             // MARK: - Image
-            Image(systemName: "bitcoinsign.circle.fill")
+            KFImage(coin.image)
                 .resizable()
                 .frame(width: 32, height: 32)
-                .foregroundColor(.orange)
+                .clipShape(Circle())
             
             Spacer().frame(height: 4)
             
             // MARK: - Coin Info
             HStack(spacing: 4) {
-                Text("BTC")
+                Text(coin.symbol.uppercased())
                     .fontWeight(.bold)
                 
-                Text("$20,330.00")
+                Text(coin.currentPrice.toCurrency())
                     .foregroundColor(.gray)
             }
             .font(.caption)
             
             // MARK: - Coin Percent Change
-            Text("+ 5.60%")
+            Text(coin.priceChangePercentage24h.toPercent())
                 .font(.title2)
-                .foregroundColor(.green)
+                .foregroundColor(coin.percentageColor)
         }
+        .tint(.primary)
+        .cornerRadius(10)
         .frame(width: 150, height: 150)
-        .overlay(
-            RoundedRectangle(cornerRadius: 10).stroke(Color(.systemGray4), lineWidth: 1)
+        .background(
+            Color(.systemGray6)
+                .cornerRadius(15)
+                .shadow(color: scheme == .light ? .gray.opacity(0.25) : .clear, radius: 5, x: 5, y: 5)
         )
+        .padding(.top, 8)
+        .padding(.bottom)
     }
 }
 
-struct TopMoversItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        TopMoversItemView()
-    }
-}
+//struct TopMoversItemView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TopMoversItemView()
+//    }
+//}
