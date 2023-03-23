@@ -11,6 +11,7 @@ final class HomeViewModel: ObservableObject {
     // MARK: - Properties
     @Published var coins = [CoinModel]()
     @Published var topMovingCoins = [CoinModel]()
+    @Published var isLoading = true
     
     // MARK: - Init
     init() {
@@ -28,6 +29,7 @@ extension HomeViewModel {
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("DEBUG: Error \(error.localizedDescription)")
+                self.isLoading = false
                 return
             }
             
@@ -40,11 +42,15 @@ extension HomeViewModel {
             do {
                 let coins = try JSONDecoder().decode([CoinModel].self, from: data)
                 DispatchQueue.main.async {
-                    self.coins = coins
-                    self.configureTopMovingCoins()
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        self.coins = coins
+                        self.configureTopMovingCoins()
+                        self.isLoading = false
+                    }
                 }
             } catch let error {
                 print("DEBUG: Failed to decode with error: \(error)")
+                self.isLoading = false
             }
         }
         .resume()

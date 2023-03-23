@@ -13,13 +13,21 @@ struct HomeView: View {
     
     // MARK: - Body
     var body: some View {
-        NavigationView {
-            ScrollView(showsIndicators: false) {
-                TopMoversView(homeViewModel: viewModel)
+        NavigationStack {
+            ZStack {
+                ScrollView(showsIndicators: false) {
+                    TopMoversView(homeViewModel: viewModel)
+                        .opacity(viewModel.isLoading ? 0 : 1)
+                    
+                    Divider().padding(.vertical, 6)
+                    
+                    AllCoinsView(homeViewModel: viewModel)
+                        .opacity(viewModel.isLoading ? 0 : 1)
+                }
                 
-                Divider().padding(.vertical, 6)
-                
-                AllCoinsView(homeViewModel: viewModel)
+                if viewModel.isLoading {
+                    LoadingIndicator()
+                }
             }
             .navigationTitle("Live Prices")
         }

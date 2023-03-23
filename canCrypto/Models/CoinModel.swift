@@ -39,11 +39,11 @@ struct CoinModel: Identifiable, Codable {
     let priceChangePercentage24hInCurrency: Double?
 }
 
+struct SparklineIn7d: Codable {
+    let price: [Double]
+}
+
 extension CoinModel {
-    struct SparklineIn7d: Codable {
-        let price: [Double]
-    }
-    
     var percentageColor: Color {
         return self.priceChangePercentage24h > 0 ? .green : .red
     }

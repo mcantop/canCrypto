@@ -34,7 +34,7 @@ struct AllCoinsView: View {
                 ScrollView(showsIndicators: false) {
                     ForEach(homeViewModel.coins) { coin in
                         NavigationLink {
-                            CoinDetailsView()
+                            LazyNavigation(CoinDetailsView(coin: coin))
                         } label: {
                             CoinRowView(coin: coin)
                         }
